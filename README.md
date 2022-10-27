@@ -1,6 +1,6 @@
-# meteo
+# Meteo
 
-This template should help get you started developing with Vue 3 in Vite.
+☁ A simple web app to view the weather of any location. Built using Vue.js, TailwindCSS and OpenWeatherAPI
 
 ## Recommended IDE Setup
 
