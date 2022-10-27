@@ -1,5 +1,7 @@
 <template>
-  <div class="navbar bg-base-100 w-1/2 self-center sticky top-0 rounded-full">
+  <div
+    class="navbar bg-base-100 w-full px-4 md:w-1/2 self-center sticky top-0 rounded-full"
+  >
     <div class="navbar-start">
       <div
         class="tooltip tooltip-bottom cursor-pointer"
