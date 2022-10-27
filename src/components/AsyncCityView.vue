@@ -185,13 +185,13 @@
     <div class="divider w-1/2 self-center" />
 
     <!-- Weekly Weather -->
-    <div class="max-w-screen-md w-full py-12">
-      <div class="mx-8">
+    <div class="max-w-screen-md w-full py-0 md:py-12">
+      <div class="md:mx-8">
         <h2 class="mb-4 font-bold text-2xl text-center">7 Day Forecast</h2>
         <div
           v-for="day in weatherData.daily"
           :key="day.dt"
-          class="grid grid-cols-3 gap-4 items-center rounded-full p-2 px-3 my-1 hover:bg-secondary hover:bg-opacity-10"
+          class="grid grid-cols-3 gap-4 items-center rounded-full p-2 md:px-3 my-1 hover:bg-secondary hover:bg-opacity-10"
         >
           <div class="flex items-center">
             <img
