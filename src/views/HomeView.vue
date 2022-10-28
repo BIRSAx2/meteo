@@ -79,7 +79,8 @@ const previewCity = (place) => {
     params: {
       state: place.address.state,
       country: place.address.country,
-      city: place.address.city || place.address.town || place.address.village,
+      city:
+        place.address.city || place.address.town || place.address.village || "",
     },
     query: {
       latitude: place.lat,

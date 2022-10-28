@@ -51,7 +51,9 @@
             </svg>
           </div>
           <h1 class="text-4xl mb-2">
-            {{ route.params.city }}
+            {{
+              route.params.city || route.params.state || route.params.country
+            }}
           </h1>
         </div>
         <p class="text-sm mb-2 md:mb-0">
@@ -203,8 +205,11 @@
             <div
               class="flex gap-2 flex-1 justify-end items-center font-medium text-lg"
             >
-              <p>{{ Math.ceil(day.pop * 100) }} %</p>
-              <Droplet :fill-percent="day.pop * 100 + '%'" />
+              <WeatherIcon
+                :value="day.pop ?? 0"
+                icon-name="droplet"
+                icon-code-point="'\f043'"
+              />
             </div>
             <div class="flex gap-2 flex-1 justify-end font-medium text-lg">
               <p>{{ Math.round(day.temp.max) }} &deg;</p>
@@ -221,7 +226,7 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { getWeatherData } from "../services/weatherApi";
-import Droplet from "./Droplet.vue";
+import WeatherIcon from "./WeatherIcon.vue";
 
 const route = useRoute();
 

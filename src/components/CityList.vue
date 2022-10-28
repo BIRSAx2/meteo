@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
     <div v-for="city in savedCities" :key="city.id">
       <CityCard :city="city" @click="goToCityView(city)" class="mx-4 md:mx-0" />
     </div>

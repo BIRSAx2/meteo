@@ -8,7 +8,7 @@
         data-tip="Change Theme"
         @click="$emit('change-theme')"
       >
-        <button class="btn btn-ghost">
+        <button class="">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -54,11 +54,7 @@
     <header class="navbar-end">
       <!-- addCity -->
       <div class="md:tooltip md:tooltip-bottom swap" data-tip="Save city">
-        <button
-          class="btn btn-ghost active"
-          @click="handleSaveCity"
-          v-if="route.query.preview"
-        >
+        <button class="" @click="handleSaveCity" v-if="route.query.preview">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -80,7 +76,7 @@
 
       <div class="md:tooltip md:tooltip-bottom" data-tip="Remove">
         <button
-          class="btn btn-ghost active"
+          class=""
           @click="handleRemoveCity"
           v-if="!route.query.preview && isWeatherView()"
         >
