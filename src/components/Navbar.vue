@@ -8,26 +8,28 @@
         data-tip="Change Theme"
         @click="$emit('change-theme')"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
-          />
-        </svg>
+        <button class="btn btn-ghost">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
+            />
+          </svg>
+        </button>
       </div>
     </div>
     <div class="navbar-center">
       <RouterLink :to="{ name: 'home' }">
         <div
-          class="flex items-center gap-3 no-underline btn btn-ghost normal-case text-xl"
+          class="flex items-center gap-3 no-underline normal-case text-xl hover:bg-color-primary"
         >
           <svg
             stroke="currentColor"
@@ -54,7 +56,7 @@
       <div class="md:tooltip md:tooltip-bottom swap" data-tip="Save city">
         <button
           class="btn btn-ghost active"
-          @click="addCity"
+          @click="handleSaveCity"
           v-if="route.query.preview"
         >
           <svg
@@ -79,7 +81,7 @@
       <div class="md:tooltip md:tooltip-bottom" data-tip="Remove">
         <button
           class="btn btn-ghost active"
-          @click="removeCity"
+          @click="handleRemoveCity"
           v-if="!route.query.preview && isWeatherView()"
         >
           <svg
@@ -103,8 +105,10 @@
 </template>
 
 <script setup>
-import { RouterLink, useRoute, useRouter } from "vue-router";
 import { ref } from "vue";
+import { RouterLink, useRoute, useRouter } from "vue-router";
+
+import { removeCity, addCity } from "../services/weatherApi";
 
 defineEmits(["change-theme"]);
 
@@ -113,48 +117,34 @@ const router = useRouter();
 
 const savedCities = ref([]);
 
-const addCity = () => {
-  if (localStorage.getItem("savedCities")) {
-    savedCities.value = JSON.parse(localStorage.getItem("savedCities"));
-  }
-
-  const locationObject = {
-    id: randomId(),
-    state: route.params.state,
-    city: route.params.city,
-    country: route.params.country,
-    coordinates: {
-      latitude: route.query.latitude,
-      longitude: route.query.longitude,
-    },
-  };
-
-  savedCities.value.push(locationObject);
-  localStorage.setItem("savedCities", JSON.stringify(savedCities.value));
-  let query = Object.assign({}, route.query);
-  delete query.preview;
-  query.id = locationObject.id;
-  router.replace({ query });
-};
-
-const randomId = () => {
-  return window.crypto.getRandomValues(new Uint32Array(1)).toString();
-};
-
-const removeCity = () => {
-  const cities = JSON.parse(localStorage.getItem("savedCities"));
-  const updatedCities = cities.filter((city) => {
-    return city.id != route.query.id;
-  });
-
-  localStorage.setItem("savedCities", JSON.stringify(updatedCities));
-
+const handleRemoveCity = () => {
+  removeCity(route.query.id);
   router.push({
     name: "home",
   });
+};
+
+const handleSaveCity = () => {
+  let [cities, locationId] = addCity(
+    route.params.state,
+    route.params.city,
+    route.params.country,
+    route.query.latitude,
+    route.query.longitude
+  );
+
+  savedCities.value = cities;
+  let query = Object.assign({}, route.query);
+
+  delete query.preview;
+  query.id = locationId;
+
+  router.replace({ query });
 };
 
 const isWeatherView = () => {
   return route.path.startsWith("/weather");
 };
 </script>
+
+// TODO: fill water drop with water based on percentage of pop

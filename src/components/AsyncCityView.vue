@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col flex-1 items-center">
-    <div class="px-2">
+    <div class="px-2" v-if="route.query.preview">
       <div class="mt-2 bg-secondary bg-opacity-20 alert shadow-lg p-2 md:p-4">
         <div>
           <svg
@@ -143,8 +143,8 @@
     <!-- Hourly Weather -->
     <div class="max-w-screen-md w-full py-12">
       <div class="mx-2 md:mx-8">
-        <h2 class="mb-4 font-bold text-2xl text-center">Hourly Weather</h2>
-        <div class="flex gap-10 overflow-x-auto scroll-auto">
+        <h2 class="mb-4 font-bold text-2xl text-center">Hourly</h2>
+        <div class="flex gap-10 overflow-x-auto scroll-auto scrollbar pb-3">
           <div
             v-for="hourData in weatherData.hourly"
             :key="hourData.dt"
@@ -174,7 +174,7 @@
     <!-- Weekly Weather -->
     <div class="max-w-screen-md w-full py-0 md:py-12">
       <div class="mx-2 md:mx-8">
-        <h2 class="mb-4 font-bold text-2xl text-center">7 Day Forecast</h2>
+        <h2 class="mb-4 font-bold text-2xl text-center">Daily</h2>
         <div
           v-for="day in weatherData.daily"
           :key="day.dt"
@@ -230,32 +230,34 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import { useRoute } from "vue-router";
+import { getWeatherData } from "../services/weatherApi";
 
-const apiKey = import.meta.env.VITE_API_KEY;
 const route = useRoute();
 
-const getWeatherData = async () => {
-  try {
-    const weatherData = await axios.get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${route.query.latitude}&lon=${route.query.longitude}&exclude={part}&appid=${apiKey}&units=metric`
-    );
-
-    // cal current date & time
-    const localOffset = new Date().getTimezoneOffset() * 60000;
-    const utc = weatherData.data.current.dt * 1000 + localOffset;
-    weatherData.data.currentTime =
-      utc + 1000 * weatherData.data.timezone_offset;
-    // cal hourly weather offset
-    weatherData.data.hourly.forEach((hour) => {
-      const utc = hour.dt * 1000 + localOffset;
-      hour.currentTime = utc + 1000 * weatherData.data.timezone_offset;
-    });
-    return weatherData.data;
-  } catch (err) {
-    console.log(err);
-  }
-};
-const weatherData = await getWeatherData();
+const weatherData = await getWeatherData(
+  route.query.latitude,
+  route.query.longitude
+);
 </script>
+
+<style>
+.scrollbar::-webkit-scrollbar {
+  width: 20px;
+  height: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: theme("colors.base-100");
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: theme("colors.accent");
+  border-radius: 100vh;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: theme("colors.secondary");
+}
+</style>

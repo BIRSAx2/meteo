@@ -10,12 +10,14 @@
         <component :is="Component" />
       </Transition>
     </RouterView>
+    <Footer />
   </div>
 </template>
 
 <script setup>
 import { RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
 import { ref } from "vue";
 
 const theme = ref(null);
