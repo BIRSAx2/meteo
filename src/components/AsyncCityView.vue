@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 items-center">
-    <div>
-      <div class="alert shadow-lg inline" v-show="route.query.preview">
+    <div class="px-2">
+      <div class="mt-2 bg-secondary bg-opacity-20 alert shadow-lg p-2 md:p-4">
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -18,28 +18,14 @@
           </svg>
           <span
             >You are currently previewing this city. To start tracking this city
-            presso the button above
-          </span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-5 h-5"
+            presso the save button above</span
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-            />
-          </svg>
         </div>
       </div>
     </div>
     <!-- Weather Overview -->
     <div
-      class="grid grid-cols-1 md:grid-cols-3 md:gap-12 items-center justify-center py-12"
+      class="grid grid-cols-1 lg:grid-cols-3 md:gap-12 items-center justify-center py-12"
     >
       <div class="flex flex-col items-center justify-content-center">
         <div class="flex flex-row gap-2 items-centers self-center align-middle">

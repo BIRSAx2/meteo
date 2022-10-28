@@ -12,10 +12,10 @@ module.exports = {
       padding: "0rem",
       center: true,
     },
-    screens: {
-      sm: "640px",
-      md: "768px",
-    },
+    // screens: {
+    //   sm: "640px",
+    //   md: "768px",
+    // },
   },
   plugins: [require("daisyui")],
   daisyui: {

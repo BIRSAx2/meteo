@@ -4,7 +4,7 @@
       <CityCard :city="city" @click="goToCityView(city)" class="mx-4 md:mx-0" />
     </div>
   </div>
-  <p v-if="savedCities.length == 0">
+  <p v-if="savedCities.length == 0" class="text-center px-2">
     No location added. To start tracking a location, search in the field above.
   </p>
 </template>
