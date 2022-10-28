@@ -12,36 +12,8 @@ module.exports = {
       padding: "0rem",
       center: true,
     },
-    // screens: {
-    //   sm: "640px",
-    //   md: "768px",
-    // },
   },
-  plugins: [
-    require("daisyui"),
-    function ({ addBase, theme }) {
-      function extractColorVars(colorObj, colorGroup = "") {
-        return Object.keys(colorObj).reduce((vars, colorKey) => {
-          const value = colorObj[colorKey];
-          const cssVariable =
-            colorKey === "DEFAULT"
-              ? `--color${colorGroup}`
-              : `--color${colorGroup}-${colorKey}`;
-
-          const newVars =
-            typeof value === "string"
-              ? { [cssVariable]: value }
-              : extractColorVars(value, `-${colorKey}`);
-
-          return { ...vars, ...newVars };
-        }, {});
-      }
-
-      addBase({
-        ":root": extractColorVars(theme("colors")),
-      });
-    },
-  ],
+  plugins: [require("daisyui")],
   daisyui: {
     styled: true,
     themes: true,

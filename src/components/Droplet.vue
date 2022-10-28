@@ -1,5 +1,5 @@
 <template>
-  <i class="droplet fa-sharp fa-solid fa-droplet"></i>
+  <i class="droplet fa-solid fa-droplet"></i>
 </template>
 
 <script setup>
@@ -16,7 +16,7 @@ const props = defineProps({
   display: inline-block;
   position: relative;
   font-size: 20;
-  color: #ddd;
+  @apply text-gray-300;
 }
 .droplet:after {
   font-family: FontAwesome;
