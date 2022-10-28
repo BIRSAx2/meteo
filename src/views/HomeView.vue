@@ -1,6 +1,6 @@
 <template>
   <main class="container">
-    <div class="pt-4 mb-8 relative">
+    <div class="pt-4 mb-8 relative mx-4 md:mx-0">
       <input
         type="text"
         v-model="searchQuery"
@@ -74,13 +74,12 @@ const getSearchResults = () => {
 
 const router = useRouter();
 const previewCity = (place) => {
-  console.log(place);
   router.push({
     name: "CityView",
     params: {
       state: place.address.state,
       country: place.address.country,
-      city: place.address.city || place.address.town,
+      city: place.address.city || place.address.town || place.address.village,
     },
     query: {
       latitude: place.lat,

@@ -4,7 +4,7 @@
   >
     <div class="navbar-start">
       <div
-        class="tooltip tooltip-bottom cursor-pointer"
+        class="md:tooltip md:tooltip-bottom cursor-pointer"
         data-tip="Change Theme"
         @click="$emit('change-theme')"
       >
@@ -51,7 +51,7 @@
     </div>
     <header class="navbar-end">
       <!-- addCity -->
-      <div class="tooltip tooltip-bottom swap" data-tip="Save city">
+      <div class="md:tooltip md:tooltip-bottom swap" data-tip="Save city">
         <button
           class="btn btn-ghost active"
           @click="addCity"
@@ -76,7 +76,7 @@
 
       <!-- removeCity -->
 
-      <div class="tooltip tooltip-bottom" data-tip="Remove">
+      <div class="md:tooltip md:tooltip-bottom" data-tip="Remove">
         <button
           class="btn btn-ghost active"
           @click="removeCity"

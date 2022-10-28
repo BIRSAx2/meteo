@@ -23,47 +23,12 @@ const theme = ref(null);
 if (localStorage.getItem("theme")) {
   theme.value = localStorage.getItem("theme");
 } else {
-  theme.value = "light";
+  theme.value = "corporate";
 }
-const themes = ref([
-  "light",
-  "dark",
-  "cupcake",
-  "bumblebee",
-  "emerald",
-  "corporate",
-  "synthwave",
-  "retro",
-  "cyberpunk",
-  "valentine",
-  "halloween",
-  "garden",
-  "forest",
-  "aqua",
-  "lofi",
-  "pastel",
-  "fantasy",
-  "wireframe",
-  "black",
-  "luxury",
-  "dracula",
-  "cmyk",
-  "autumn",
-  "business",
-  "acid",
-  "lemonade",
-  "night",
-  "coffee",
-  "winter",
-]);
+const themes = ref(["corporate", "dracula"]);
 const changeTheme = () => {
-  let randomTheme =
-    themes.value[Math.floor(Math.random() * themes.value.length)];
-  while (randomTheme == theme.value) {
-    randomTheme = themes.value[Math.floor(Math.random() * themes.value.length)];
-  }
-  theme.value = randomTheme;
-  localStorage.setItem("theme", randomTheme);
+  theme.value = theme.value == "corporate" ? "dracula" : "corporate";
+  localStorage.setItem("theme", theme.value);
 };
 </script>
 

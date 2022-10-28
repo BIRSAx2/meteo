@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 items-center">
     <div>
-      <div class="alert shadow-lg" v-show="route.query.preview">
+      <div class="alert shadow-lg inline" v-show="route.query.preview">
         <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@
           </svg>
           <span
             >You are currently previewing this city. To start tracking this city
-            presso the
+            presso the button above
           </span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,6 @@
               d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
             />
           </svg>
-          button above
         </div>
       </div>
     </div>
@@ -43,7 +42,7 @@
       class="grid grid-cols-1 md:grid-cols-3 md:gap-12 items-center justify-center py-12"
     >
       <div class="flex flex-col items-center justify-content-center">
-        <div class="flex flex-row gap-2 items-centers">
+        <div class="flex flex-row gap-2 items-centers self-center align-middle">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +68,7 @@
             {{ route.params.city }}
           </h1>
         </div>
-        <p class="text-sm mb-12">
+        <p class="text-sm mb-2 md:mb-0">
           {{
             new Date(weatherData.currentTime).toLocaleDateString("en-us", {
               weekday: "short",
@@ -106,11 +105,13 @@
     </div>
 
     <div class="divider w-1/2 self-center" />
-
+    <!-- Today -->
     <div class="max-w-screen-md w-full py-12">
       <div class="mx-8">
         <h2 class="mb-4 font-bold text-2xl text-center">Today</h2>
-        <div class="grid grid-cols-3 items-center justify-center gap-8">
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 items-center justify-center gap-8"
+        >
           <div class="flex flex-col items-center justify-center">
             <h3 class="text-lg capitalize font-medium mb-2">Cloudiness</h3>
             <p>{{ weatherData.current.clouds }} %</p>
@@ -155,9 +156,9 @@
 
     <!-- Hourly Weather -->
     <div class="max-w-screen-md w-full py-12">
-      <div class="mx-8">
+      <div class="mx-2 md:mx-8">
         <h2 class="mb-4 font-bold text-2xl text-center">Hourly Weather</h2>
-        <div class="flex gap-10 overflow-x-scroll">
+        <div class="flex gap-10 overflow-x-auto scroll-auto">
           <div
             v-for="hourData in weatherData.hourly"
             :key="hourData.dt"
@@ -186,14 +187,14 @@
 
     <!-- Weekly Weather -->
     <div class="max-w-screen-md w-full py-0 md:py-12">
-      <div class="md:mx-8">
+      <div class="mx-2 md:mx-8">
         <h2 class="mb-4 font-bold text-2xl text-center">7 Day Forecast</h2>
         <div
           v-for="day in weatherData.daily"
           :key="day.dt"
           class="grid grid-cols-3 gap-4 items-center rounded-full p-2 md:px-3 my-1 hover:bg-secondary hover:bg-opacity-10"
         >
-          <div class="flex items-center">
+          <div class="flex items-center col-span-1">
             <img
               class="w-[50px] h-[50px] object-cover"
               :src="`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`"
@@ -212,27 +213,29 @@
             </div>
           </div>
 
-          <div class="flex gap-2 flex-1 justify-end font-medium text-lg">
-            <p>{{ day.pop }} %</p>
-            <svg
-              fill="currentColor"
-              class="w-6 h-6 fill-current ml-1 text-red-blue-900"
-              viewBox="0 0 16 20"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g transform="matrix(1,0,0,1,-4,-2)">
-                <path
-                  d="M17.66,8L12.71,3.06C12.32,2.67 11.69,2.67 11.3,3.06L6.34,8C4.78,9.56 4,11.64 4,13.64C4,15.64 4.78,17.75 6.34,19.31C7.9,20.87 9.95,21.66 12,21.66C14.05,21.66 16.1,20.87 17.66,19.31C19.22,17.75 20,15.64 20,13.64C20,11.64 19.22,9.56 17.66,8ZM6,14C6.01,12 6.62,10.73 7.76,9.6L12,5.27L16.24,9.65C17.38,10.77 17.99,12 18,14C18.016,17.296 14.96,19.809 12,19.74C9.069,19.672 5.982,17.655 6,14Z"
-                  style="fill-rule: nonzero"
-                />
-              </g>
-            </svg>
-          </div>
-          <div class="flex gap-2 flex-1 justify-end font-medium text-lg">
-            <p>{{ Math.round(day.temp.max) }} &deg;</p>
-            /
-            <p>{{ Math.round(day.temp.min) }} &deg;</p>
+          <div class="col-span-2 md:flex">
+            <div class="flex gap-2 flex-1 justify-end font-medium text-lg">
+              <p>{{ Math.ceil(day.pop) }} %</p>
+              <svg
+                fill="currentColor"
+                class="w-5 h-5 fill-current ml-1 text-red-blue-900"
+                viewBox="0 0 16 20"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g transform="matrix(1,0,0,1,-4,-2)">
+                  <path
+                    d="M17.66,8L12.71,3.06C12.32,2.67 11.69,2.67 11.3,3.06L6.34,8C4.78,9.56 4,11.64 4,13.64C4,15.64 4.78,17.75 6.34,19.31C7.9,20.87 9.95,21.66 12,21.66C14.05,21.66 16.1,20.87 17.66,19.31C19.22,17.75 20,15.64 20,13.64C20,11.64 19.22,9.56 17.66,8ZM6,14C6.01,12 6.62,10.73 7.76,9.6L12,5.27L16.24,9.65C17.38,10.77 17.99,12 18,14C18.016,17.296 14.96,19.809 12,19.74C9.069,19.672 5.982,17.655 6,14Z"
+                    style="fill-rule: nonzero"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div class="flex gap-2 flex-1 justify-end font-medium text-lg">
+              <p>{{ Math.round(day.temp.max) }} &deg;</p>
+              /
+              <p>{{ Math.round(day.temp.min) }} &deg;</p>
+            </div>
           </div>
         </div>
       </div>
